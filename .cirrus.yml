@@ -1,0 +1,47 @@
+env:
+    CIRRUS_CLONE_DEPTH: 1
+    CIRRUS_WORKING_DIR: "/tmp/ci"
+
+    rclone_config: "ENCRYPTED[e96d11755e5d826c16b48c3284d5ff39f8a2a7c9e66c3b8179a6e771d18b8705af511bb783b6f8cdeac357172875ea99]"
+
+    rom_name: $(grep ROM_MANIFEST= CIRRUS_WORKING_DIR/build.sh | cut -d / -f4)
+    user_name: $(grep LOCAL_MANIFEST= CIRRUS_WORKING_DIR/build.sh | cut -d / -f4)
+    lunch_device: $(grep lunch CIRRUS_WORKING_DIR/build.sh | cut -d _ -f2 | cut -d - -f1)
+    brunch_device: $(grep brunch CIRRUS_WORKING_DIR/build.sh | cut -d ' ' -f2 | cut -d ' ' -f1)
+
+task:
+    name: PixelExperience
+    timeout_in: 120m
+    container:
+      image: mrkhan007/aosp:latest
+      cpu: 8
+      memory: 32G
+    env_script:
+      - env
+    check_script:
+      - set -e
+      - curl -Ls https://github.com/P-Salik/ROM-Builder/raw/master/check.sh | bash
+    download_ccache_background_script:
+      - set -evx
+      - command=$(head CIRRUS_WORKING_DIR/ccache.sh -n $(expr $(grep "rm -rf ccache.tar.gz" CIRRUS_WORKING_DIR/ccache.sh -n | cut -d : -f1) + 1))
+      - bash -c "$command"
+    sync_script:
+      - set -evx
+      - command=$(head CIRRUS_WORKING_DIR/build.sh -n $(expr $(grep ". build/envsetup.sh" CIRRUS_WORKING_DIR/build.sh -n | cut -f1 -d:) - 3))
+      - bash -c "$command"
+    monitor_background_script:
+      - set -evx
+      - command=$(tail CIRRUS_WORKING_DIR/ccache.sh -n $(expr $(grep "export" CIRRUS_WORKING_DIR/ccache.sh -n | cut -d : -f1) + 10) | head -n 12)
+      - bash -c "$command"
+    build_script:
+      - set -evx
+      - command=$(tail CIRRUS_WORKING_DIR/build.sh -n +$(expr $(grep "envsetup.sh" CIRRUS_WORKING_DIR/build.sh -n | cut -d : -f1) - 3) | grep -v "/tmp/rom/out/target/product/")
+      - bash -c "$command"
+    upload_rom_script:
+      - set -evx
+      - command=$(tail CIRRUS_WORKING_DIR/build.sh -n +$(expr $(grep "up()" CIRRUS_WORKING_DIR/build.sh -n | cut -d : -f1) - 2))
+      - bash -c "$command"
+    upload_ccache_script:
+      - set -evx
+      - command=$(tail CIRRUS_WORKING_DIR/ccache.sh -n +$(expr $(grep "com ()" CIRRUS_WORKING_DIR/ccache.sh -n | cut -d : -f1) - 4))
+      - bash -c "$command"
