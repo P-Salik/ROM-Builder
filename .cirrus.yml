@@ -10,7 +10,25 @@ env:
     brunch_device: $(grep brunch CIRRUS_WORKING_DIR/build.sh | cut -d ' ' -f2 | cut -d ' ' -f1)
 
 task:
-    name: PixelExperience
+  name: Test
+  skip: $CIRRUS_BRANCH == 'master'
+  timeout_in: 30m
+  container:
+    image: apon77/aosp:cirrus
+    cpu: .7
+    memory: 2G
+  env_script:
+    - env
+  show_script:
+    - cat $CIRRUS_WORKING_DIR/build_rom.sh
+  test_script:
+    - set -e
+    - curl -Ls https://github.com/P-Salik/ROM-Builder/raw/master/test.sh | bash
+
+task:
+    name: ROM-Builder
+    depends_on:
+      - Test  
     timeout_in: 120m
     container:
       image: mrkhan007/aosp:latest
