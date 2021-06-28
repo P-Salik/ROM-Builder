@@ -20,7 +20,7 @@ task:
   env_script:
     - env
   show_script:
-    - cat "$CIRRUS_WORKING_DIR"/build_rom.sh
+    - cat "$CIRRUS_WORKING_DIR"/build.sh
   test_script:
     - set -e
     - curl -Ls https://github.com/P-Salik/ROM-Builder/raw/master/test.sh | bash
