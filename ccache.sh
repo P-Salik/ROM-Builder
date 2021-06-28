@@ -7,7 +7,7 @@ cat /etc/os*
 env
 
 # Add your ccache link here
-url=
+url=https://gdrive.peersalik16.workers.dev/0:/ccache/ccache-ci2/ccache.tar.gz
 
 cd /tmp
 time aria2c $url -x16 -s50
