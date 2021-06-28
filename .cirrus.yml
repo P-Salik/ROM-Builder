@@ -4,10 +4,10 @@ env:
 
     rclone_config: "ENCRYPTED[e96d11755e5d826c16b48c3284d5ff39f8a2a7c9e66c3b8179a6e771d18b8705af511bb783b6f8cdeac357172875ea99]"
 
-    rom_name: $(grep ROM_MANIFEST= "$CIRRUS_WORKING_DIR"/build.sh | cut -d / -f4)
-    user_name: $(grep LOCAL_MANIFEST= "$CIRRUS_WORKING_DIR"/build.sh | cut -d / -f4)
-    lunch_device: $(grep lunch "$CIRRUS_WORKING_DIR"/build.sh | cut -d _ -f2 | cut -d - -f1)
-    brunch_device: $(grep brunch "$CIRRUS_WORKING_DIR"/build.sh | cut -d ' ' -f2 | cut -d ' ' -f1)
+    rom_name: $(grep ROM_MANIFEST= /tmp/ci/build.sh | cut -d / -f4)
+    user_name: $(grep LOCAL_MANIFEST= /tmp/ci/build.sh | cut -d / -f4)
+    lunch_device: $(grep lunch /tmp/ci/build.sh | cut -d _ -f2 | cut -d - -f1)
+    brunch_device: $(grep brunch /tmp/ci/build.sh | cut -d ' ' -f2 | cut -d ' ' -f1)
 
 task:
   name: Test
