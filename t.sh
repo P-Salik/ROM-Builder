@@ -1,20 +1,21 @@
 #!/bin/bash
 
-rom_name=$(grep ROM_MANIFEST= /tmp/ci/build.sh | cut -d / -f4)
-user_name=$(grep LOCAL_MANIFEST= /tmp/ci/build.sh | cut -d / -f4)
-lunch_device=$(grep lunch /tmp/ci/build.sh | cut -d _ -f2 | cut -d - -f1)
-brunch_device=$(grep brunch /tmp/ci/build.sh | cut -d ' ' -f2 | cut -d ' ' -f1)
+rom_name=$(grep ROM_MANIFEST= build.sh | cut -d / -f4)
+user_name=$(grep LOCAL_MANIFEST= build.sh | cut -d / -f4)
+lunch_device=$(grep lunch build.sh | cut -d _ -f2 | cut -d - -f1)
+brunch_device=$(grep brunch build.sh | cut -d ' ' -f2 | cut -d ' ' -f1)
 
+echo $user_name"-"$brunch_device"-"$rom_name
 
 cirrus_branch=$(env | grep CIRRUS_BRANCH | cut -d = -f2)
 
 # Branch name-format check
 
-if [[ $cirrus_branch == $user_name'-'$lunch_device'-'$rom_name ]]
+if [[ $cirrus_branch == $user_name-$lunch_device-$rom_name ]]
 then
 	echo "Branch-Check Status= Passed!"
 
-elif [[ $cirrus_branch == $user_name'-'$brunch_device'-'$rom_name ]]
+elif [[ $cirrus_branch == $user_name-$brunch_device-$rom_name ]]
 then
 	echo "Branch-Check Status= Passed!"
 
