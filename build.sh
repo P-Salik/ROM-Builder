@@ -30,6 +30,7 @@ cd ../..
 cd /tmp/rom
 
 . build/envsetup.sh
+lunch havoc_RMX1941-userdebug
 
 export SKIP_API_CHECKS=true
 export SKIP_ABI_CHECKS=true
