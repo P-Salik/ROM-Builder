@@ -50,10 +50,11 @@ make_metalava(){
 	mka test-api-stubs-docs
 }
 
-#make_metalava
-brunch RMX1941 -j$(nproc --all) &
-sleep 90m
-kill %1 || echo "Build already failed or completed"
+make_metalava
+make sepolicy
+#brunch RMX1941 -j$(nproc --all) &
+#sleep 90m
+#kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
