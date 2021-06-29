@@ -51,11 +51,10 @@ make_metalava(){
 	mka test-api-stubs-docs
 }
 
-make_metalava
-make sepolicy
-#brunch RMX1941 -j$(nproc --all) &
-#sleep 90m
-#kill %1 || echo "Build already failed or completed"
+#make_metalava
+brunch RMX1941 -j$(nproc --all) &
+sleep 90m
+kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
@@ -65,6 +64,6 @@ up(){
 	time rclone copy $1 aosp:ccache/ccache-ci -P
 }
 
-upload_rom
+up /tmp/rom/out/target/product/RMX1941/*Unofficial*.zip
 
 ccache -s

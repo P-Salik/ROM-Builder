@@ -32,8 +32,8 @@ task:
     timeout_in: 120m
     container:
       image: mrkhan007/aosp:latest
-      cpu: 4
-      memory: 16G
+      cpu: 8
+      memory: 32G
     env_script:
       - env
     check_script:
