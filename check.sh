@@ -11,10 +11,14 @@ lunch_or_brunch=$(grep lunch /tmp/ci/build.sh | wc -l)
 if [[ $lunch_or_brunch -eq 1 ]]
 then
         sed -i "s/upload_rom/\#up \/tmp\/rom\/out\/target\/product\/$lunch_device\/\*\.zip/" /tmp/ci/build.sh
+	sed -i "s/upload_path/\'$user_name'\/\'$lunch_device'\/\'$rom_name'/" /tmp/ci/build.sh
+	sed -i "s/upload_ccache/ccache\/\'$user_name'\/\'$lunch_device'\/\'$rom_name'/" /tmp/ci/ccache.sh
 
 elif [[ $lunch_or_brunch -eq 0 ]]
 then
         sed -i "s/upload_rom/\#up \/tmp\/rom\/out\/target\/product\/$brunch_device\/\*\.zip/" /tmp/ci/build.sh
+	sed -i "s/upload_path/\'$user_name'\/\'$brunch_device'\/\'$rom_name'/" /tmp/ci/build.sh
+	sed -i "s/upload_ccache/ccache\/\'$user_name'\/\'$brunch_device'\/\'$rom_name'/" /tmp/ci/ccache.sh
 
 fi
 

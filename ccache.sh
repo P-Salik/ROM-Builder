@@ -41,4 +41,4 @@ time com ccache 1
 # Use Your own RClone Config!
 mkdir -p ~/.config/rclone
 echo "$rclone_config" > ~/.config/rclone/rclone.conf
-time rclone copy ccache.tar.gz aosp:ccache/ccache-ci2 -P
+time rclone copy ccache.tar.gz aosp:upload_ccache -P

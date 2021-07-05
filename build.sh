@@ -51,7 +51,7 @@ ccache -s
 up(){
 	mkdir -p ~/.config/rclone
 	echo "$rclone_config" > ~/.config/rclone/rclone.conf
-	time rclone copy $1 aosp:ccache/ccache-ci -P
+	time rclone copy $1 aosp:upload_path -P
 }
 
 upload_rom
