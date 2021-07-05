@@ -59,7 +59,8 @@ task:
       - set -evx
       - command=$(tail "$CIRRUS_WORKING_DIR"/build.sh -n +$(expr $(grep "up()" "$CIRRUS_WORKING_DIR"/build.sh -n | cut -d : -f1) - 2))
       - bash -c "$command"
-    upload_ccache_script:
-      - set -evx
-      - command=$(tail "$CIRRUS_WORKING_DIR"/ccache.sh -n +$(expr $(grep "com ()" "$CIRRUS_WORKING_DIR"/ccache.sh -n | cut -d : -f1) - 4))
-      - bash -c "$command"
+    always:
+     upload_ccache_script:
+       - set -evx
+       - command=$(tail "$CIRRUS_WORKING_DIR"/ccache.sh -n +$(expr $(grep "com ()" "$CIRRUS_WORKING_DIR"/ccache.sh -n | cut -d : -f1) - 4))
+       - bash -c "$command"
