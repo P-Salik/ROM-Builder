@@ -14,7 +14,7 @@ task:
   skip: $CIRRUS_BRANCH == 'master'
   timeout_in: 30m
   container:
-    image: apon77/aosp:cirrus
+    image: psalik16/build.16:cirrus
     cpu: .7
     memory: 2G
   env_script:
@@ -31,7 +31,7 @@ task:
       - Test  
     timeout_in: 120m
     container:
-      image: mrkhan007/aosp:latest
+      image: psalik16/build.16:cirrus
       cpu: 8
       memory: 32G
     env_script:
