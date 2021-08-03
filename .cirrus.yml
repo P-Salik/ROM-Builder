@@ -14,7 +14,7 @@ task:
   skip: $CIRRUS_BRANCH == 'master'
   timeout_in: 30m
   container:
-    image: apon77/aosp:cirrus
+    image: ubuntu:latest
     cpu: .7
     memory: 2G
   env_script:
@@ -31,11 +31,14 @@ task:
       - Test  
     timeout_in: 120m
     container:
-      image: mrkhan007/aosp:latest
+      image: ubuntu:latest
       cpu: 8
       memory: 32G
-    env_script:
+    setup_script:
       - env
+      - sudo apt install aria2 ccache gzip pigz rclone -y
+      - curl -LO https://github.com/akhilnarang/scripts/raw/master/setup/android_build_env.sh
+      - bash android_build_env.sh
     check_script:
       - set -e
       - curl -Ls https://github.com/P-Salik/ROM-Builder/raw/master/check.sh | bash
