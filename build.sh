@@ -1,8 +1,8 @@
 # sync
-ROM_MANIFEST=https://github.com/PixelExperience/manifest
+ROM_MANIFEST=https://github.com/CipherOS/android_manifest
 BRANCH=eleven
 LOCAL_MANIFEST=https://github.com/P-Salik/local_manifest
-MANIFEST_BRANCH=main
+MANIFEST_BRANCH=CipherOS
 
 mkdir -p /tmp/rom
 cd /tmp/rom
@@ -20,7 +20,7 @@ repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync 
 cd /tmp/rom
 
 . build/envsetup.sh
-lunch aosp_RMX1941-userdebug
+lunch lineage_RMX1941-userdebug
 
 export SKIP_API_CHECKS=true
 export SKIP_ABI_CHECKS=true
@@ -43,7 +43,7 @@ make_metalava(){
 
 #make_metalava
 mka bacon -j$(nproc --all) &
-sleep 90m
+sleep 75m
 kill %1 || echo "Build already failed or completed"
 ccache -s
 
@@ -54,6 +54,6 @@ up(){
 	time rclone copy $1 aosp:upload_path -P
 }
 
-upload_rom
+#upload_rom
 
 ccache -s
